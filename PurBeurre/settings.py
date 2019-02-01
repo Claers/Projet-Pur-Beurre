@@ -1,3 +1,4 @@
+from django.contrib.messages import constants as messages
 """
 Django settings for PurBeurre project.
 
@@ -25,9 +26,6 @@ SECRET_KEY = 'ioe*9306(rfyc1t22f-%-pw*14ql3!qtomm3y#rxl39d%fx$=+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webSite',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +53,7 @@ ROOT_URLCONF = 'PurBeurre.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,4 +116,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/'   # Qui devrait déjà être la configuration par défaut
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}

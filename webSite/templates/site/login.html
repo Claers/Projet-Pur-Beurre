@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Pur Beurre - Connexion
+{% endblock title %}
+{% block menuTop %}
+<a class="navbar-brand js-scroll-trigger" href="{% url 'acceuil' %}"> <img src="{% static 'site/img/favicon.ico' %}"
+                    style="margin-bottom:4px;"> Pur Beurre</a>
+{% endblock menuTop %}
+{% block content %}
+    <h1>Se connecter</h1>
+
+    {% if error %}
+    <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    Vous êtes connecté, {{ user.username }} !
+    {% else %}
+    <form method="post" action='{% url "connexion" %}'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Se connecter" />
+    </form>
+    {% endif %}
+{% endblock content %}
