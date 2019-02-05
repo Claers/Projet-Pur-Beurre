@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Pur Beurre - Recherche : {{ request.POST.PName }}
+{% endblock title %}
+
+{% block body %}
+
+<body id="page-top">
+    {% endblock body %}
+    {% block menuTop %}
+    <a class="navbar-brand js-scroll-trigger" href="{% url 'acceuil' %}"> <img src="{% static 'site/img/favicon.ico' %}"
+            style="margin-bottom:4px;">
+        Pur Beurre</a>
+    {% endblock menuTop %}
+    {% block content %}
+    <header class="sproducthead text-center text-white d-flex">
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto sproductname">
+                    <h1>
+                        <strong class="">{{ product }}</strong>
+                    </h1>
+                </div>
+                <div class="sproductimg">
+                    <img src="{{ product.imgURL }}">
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <section class="texthead">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 mx-auto">
+                    <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{product.nutriscore}}.svg" alt="NutriScore nutrition grade {{product.nutriscore}}">
+                </div>
+                <div class="col-lg-5 mx-auto">
+                    <img src="{{ nutriIMG }}" alt="Values for 100g">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 mx-auto">
+                    <a href="{{ product.productURL }}">
+                        <h3>Lien vers la page du produit sur OpenFoodFact</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock content %}

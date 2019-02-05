@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Pur Beurre - Recherche : {{ request.POST.PName }}
+{% endblock title %}
+
+{% block body %}
+
+<body id="page-top">
+    {% endblock body %}
+
+    {% block menuTop %}
+    <a class="navbar-brand js-scroll-trigger" href="{% url 'acceuil' %}"> <img src="{% static 'site/img/favicon.ico' %}">
+        Pur Beurre</a>
+    {% endblock menuTop %}
+
+    {% block content %}
+    {% if product != null %}
+    <header class="sproducthead text-center text-white d-flex">
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto sproductname">
+                    <h1>
+                        <strong class="">Aliment recherché : {{ product }}</strong>
+                    </h1>
+                </div>
+                <div class="sproductimg">
+                    <a href="{% url 'produit' product %}">
+                        <img src="{{ img }}">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <section class="texthead">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto text-center">
+                    <h2>Vous pouvez remplacer cet aliment par : </h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products">
+        {% for category, substitutes in productByCat.items %}
+        {% if substitutes|length != 0 %}
+        <h2 class="text-center">{{category}}</h2>
+        <div class="row">
+            {% for substitute in substitutes %}
+            <div class="col-5 col-md-5 col-lg-3 product">
+                <div class="productCard">
+                    <a href="{% url 'produit' substitute %}">
+                        <div class="nutriscore text-center">{{ substitute.nutriscore }}</div>
+
+                        {% if substitute.imgURL != None %}
+                        <img class="img-fluid rounded mx-auto d-block productImg" src="{{ substitute.imgURL }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h4 class="card-title text-center"><a class="subName" href="{% url 'produit' substitute %}"
+                                    title="{{ substitute }}">
+                                    {{ substitute }}
+                                </a></h4>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="btn btn-info btn-block"><span class="fas fa-floppy-o"></span>
+                                    Sauvegarder</p>
+                            </div>
+                        </div>
+
+
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% for substitute in substitutes %}
+
+
+
+        {% endfor %}
+
+    </section>
+
+    {% elif products != null %}
+
+    <header class="sproducthead text-center text-white d-flex">
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h1>
+                        <strong class="sproductname">Vous recherchez peut-être :</strong>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="products">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-5 col-md-4 col-lg-3 product">
+                <div class="productCard">
+                    <a href='javascript:void(0);' onclick='sendForm("{{ product }}")'>
+                        <div class="nutriscore text-center">{{ product.nutriscore }}</div>
+
+                        {% if product.imgURL != None %}
+                        <img class="img-fluid rounded mx-auto d-block productImg" src="{{ product.imgURL }}">
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h4 class="card-title text-center"><a href="{% url 'produit' product %}" class="subName"
+                                    title="View Product">
+                                    {{ product }}
+                                </a></h4>
+                            <div class="row">
+                                <div class="col">
+                                    <p onclick="sendForm('{{ product }}')" class="btn btn-info btn-block"><span></span>
+                                        Rechercher
+                                        ce produit</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    <script>
+        function sendForm(pName) {
+            document.getElementById("PName").value = pName;
+            document.getElementById("productRaw").value = true;
+            document.getElementById("productSearch").submit();
+        }
+    </script>
+    {% endblock content %}

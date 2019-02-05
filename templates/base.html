@@ -50,14 +50,15 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto row">
                     <li class="nav-item">
-                        <form class="form-group" action="{% url 'recherche' %}" method="post" style="margin-top:-1px; margin-right: 5px;">
+                        <form class="form-group" action="{% url 'recherche' %}" method="post" style="margin-top:-1px; margin-right: 5px;" id="productSearch">
                             {% csrf_token %}
                             <div class="input-group">
                                 <div class="col-lg-2 col-2"></div>
-                                <input type="text" name="PName" class="mx-auto col-lg-6 col-6 txtQuery" rows="1"
+                                <input id="PName" type="text" name="PName" class="mx-auto col-lg-6 col-6 txtQuery" rows="1"
                                     placeholder="Recherche...">
                                 <input type="submit" class="input-group-addon btn btn-primary col-lg-4 col-4 mx-auto"
                                     value="Rechercher" style="border-radius:0;">
+                                    <input type="hidden" id="productRaw" name="productRaw">
                             </div>
                         </form>
                     </li>

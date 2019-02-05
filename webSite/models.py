@@ -9,6 +9,8 @@ class Product(models.Model):
     brands = models.TextField(null=False)
     productURL = models.URLField(verbose_name="URL du produit", unique=True)
     nutriscore = models.CharField(max_length=1)
+    imgURL = models.URLField(
+        verbose_name="URL de l'image du produit", null=True)
 
     def __str__(self):
         return self.productName

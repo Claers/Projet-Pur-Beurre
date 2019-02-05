@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product
+from .models import Product, Category
 from django.contrib.auth import authenticate, login, logout
 from .forms import ConnexionForm
 from django.contrib import messages
+import json
+import requests
+from .databaseFill import fill
 # Create your views here.
 
 isLogout = False
 isConnected = False
+isFilled = False
 
 
 def index(request):
@@ -26,15 +30,53 @@ def search(request):
     name = request.POST.get('PName', '')
     if(name != ""):
         try:
-            product = Product.objects.get(productName__contains=name)
-            return HttpResponse(str(product))
+            isRaw = bool(request.POST.get('productRaw'))
+            if(isRaw):
+                product = Product.objects.get(productName=name)
+            else:
+                product = Product.objects.get(productName__contains=name)
+            url = product.productURL
+            img = product.imgURL
+            substitutes = Product.objects.filter(
+                productName__contains=name).exclude(
+                productName=product)
+            categories = product.category_set.all()
+            productByCat = {}
+            productAlreadyListed = []
+            for category in categories:
+                substitutes = (substitutes | category.products.exclude(
+                    productName=product))
+                for prod in productAlreadyListed:
+                    substitutes = substitutes.exclude(productName=prod)
+                for sub in substitutes:
+                    productAlreadyListed.append(sub.productName)
+                productByCat[category.categoryName] = substitutes.exclude(
+                    id=product.id).order_by('nutriscore').distinct()
+            return render(request, 'site/search.html', locals())
         except Product.MultipleObjectsReturned:
-            products = Product.objects.filter(productName__contains=name)
-            return HttpResponse(products)
+            products = Product.objects.filter(
+                productName__contains=name).order_by('nutriscore').distinct()
+            return render(request, 'site/search.html', locals())
         except Product.DoesNotExist:
             return HttpResponse("null")
     else:
         return HttpResponse("NoData")
+
+
+def productInfo(request, pName):
+    product = Product.objects.get(productName=pName)
+    url = product.productURL
+    code = url.split("/")[4]
+    resp = requests.get(
+        "https://fr.openfoodfacts.org/api/v0/produit/"+code+".json")
+    data = resp.json()
+    nutriIMG = data['product']["image_nutrition_url"]
+    return render(request, 'site/product.html', locals())
+
+
+def filldata(request):
+    fill()
+    return render(request, 'admin/base_site.html', locals())
 
 
 def connexion(request):
