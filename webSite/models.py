@@ -1,9 +1,27 @@
+"""
+Models of the webSite app objects
+"""
+
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
 
 class Product(models.Model):
+    """Store a product
+    The product is unique
+
+    Fields:
+        productName {CharField} -- The name of the product (max_lenght=100)
+        shops {TextField} -- The shops of the product (null=False)
+        brands {TextField} -- The brands of the product (null=False)
+        productURL {URLField} -- The url of the product
+        nutriscore {CharField} -- The nutriscore of the product (max_lenght=1)
+        imgURL {URLField} -- The url of the product image
+
+    Returns:
+       self.productName {string} -- The name of the product
+    """
     productName = models.CharField(max_length=100, unique=True)
     shops = models.TextField(null=False)
     brands = models.TextField(null=False)
@@ -33,23 +51,25 @@ class Category(models.Model):
 
 
 class Favorite(models.Model):
-    substitueID = models.IntegerField(verbose_name="ID du substitut")
-    productID = models.ForeignKey(Product, on_delete=models.CASCADE)
+    substitute = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='%(class)s_substitute')
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='%(class)s_product')
 
     def __str__(self):
-        return ("ID du substitut : " + str(self.substitueID)
-                + " ID du produit : " + str(self.productID.id))
+        return ("Substitut : " + str(self.substitute)
+                + " / Produit : " + str(self.product))
 
     class Meta:
         verbose_name = "Favoris"
         verbose_name_plural = "Favoris"
-        ordering = ['productID']
+        ordering = ['product']
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    username = models.CharField(max_length=30)
-    favorites = models.ForeignKey(Favorite, on_delete=models.CASCADE)
+    favorites = models.ManyToManyField(
+        Favorite)
 
     def __str__(self):
-        return "Profil de {0}".format(self.username)
+        return "Profil de {0}".format(self.user.username)

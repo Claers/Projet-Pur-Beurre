@@ -21,7 +21,7 @@
           <form class="form-group" action="{% url 'recherche' %}" method="post">
             {% csrf_token %}
             <div class="input-group">
-              <input type="text" name="PName" class="mx-auto col-lg-7 col-7 txtQuery" rows="1" placeholder="Recherche...">
+              <input type="text" name="product_name" class="mx-auto col-lg-7 col-7 txtQuery" rows="1" placeholder="Recherche...">
               <input type="submit" class="input-group-addon btn btn-primary col-lg-5 col-5 mx-auto" value="Rechercher">
             </div>
           </form>

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load search_extras %}
 {% block title %}
-Pur Beurre - Recherche : {{ request.POST.PName }}
+Pur Beurre - Recherche : {{ request.POST.product_name }}
 {% endblock title %}
 
 {% block body %}
@@ -16,7 +17,7 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
 
     {% block content %}
     {% if product != null %}
-    <header class="sproducthead text-center text-white d-flex">
+    <header class="sproducthead randimg{{random_img}} text-center text-white d-flex">
         <div class="container my-auto">
             <div class="row">
                 <div class="col-lg-10 mx-auto sproductname">
@@ -25,15 +26,19 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
                     </h1>
                 </div>
                 <div class="sproductimg">
-                    <a href="{% url 'produit' product %}">
-                        <img src="{{ img }}">
+                    <img src="{{ img }}" alt="Fiche du produit">
                     </a>
+                </div>
+                <div class="col-lg-10 mx-auto text-center">
+                    <h3>
+                        Nutriscore : <span class=" text-uppercase"> {{ product.nutriscore }} </span>
+                    </h3>
                 </div>
             </div>
 
         </div>
     </header>
-
+    {% if products_by_category|dictLenght != 0 %}
     <section class="texthead">
         <div class="container">
             <div class="row">
@@ -45,29 +50,34 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
     </section>
 
     <section class="products">
-        {% for category, substitutes in productByCat.items %}
+        {% for category, substitutes in products_by_category.items %}
         {% if substitutes|length != 0 %}
-        <h2 class="text-center">{{category}}</h2>
-        <div class="row">
+        <h2 class="category text-center"><a class="category-head" data-toggle="collapse" href="#" data-target="#category{{forloop.counter}}">
+                {{category}}
+            </a></h2>
+
+        <div class="row collapse show" id="category{{forloop.counter}}">
             {% for substitute in substitutes %}
             <div class="col-5 col-md-5 col-lg-3 product">
                 <div class="productCard">
-                    <a href="{% url 'produit' substitute %}">
-                        <div class="nutriscore text-center">{{ substitute.nutriscore }}</div>
+                    <a href="{% url 'produit_substitut' product substitute %}">
+                        <div class="nutriscore nutricolor-{{substitute.nutriscore}} text-center text-uppercase">
+                            {{ substitute.nutriscore }}</div>
 
                         {% if substitute.imgURL != None %}
                         <img class="img-fluid rounded mx-auto d-block productImg" src="{{ substitute.imgURL }}">
                         {% endif %}
                         <div class="card-body">
-                            <h4 class="card-title text-center"><a class="subName" href="{% url 'produit' substitute %}"
+                            <h4 class="card-title text-center"><a class="subName" href="{% url 'produit_substitut' product substitute %}"
                                     title="{{ substitute }}">
                                     {{ substitute }}
                                 </a></h4>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <p class="btn btn-info btn-block"><span class="fas fa-floppy-o"></span>
-                                    Sauvegarder</p>
+                                <a href="{% url 'favoris_register' product substitute %}" class="btn btn-info btn-block"><span
+                                        class="fas fa-floppy-o"></span>
+                                    Sauvegarder</a>
                             </div>
                         </div>
 
@@ -78,18 +88,25 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
             {% endfor %}
         </div>
         {% endif %}
-        {% endfor %}
-        {% for substitute in substitutes %}
-
-
 
         {% endfor %}
 
     </section>
+    {% else %}
+    <section class="texthead">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto text-center">
+                    <h2>Aucun substitut trouvé pour ce produit.</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
 
     {% elif products != null %}
 
-    <header class="sproducthead text-center text-white d-flex">
+    <header class="sproducthead randimg{{random_img}} text-center text-white d-flex">
         <div class="container my-auto">
             <div class="row">
                 <div class="col-lg-10 mx-auto">
@@ -106,8 +123,9 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
             {% for product in products %}
             <div class="col-5 col-md-4 col-lg-3 product">
                 <div class="productCard">
-                    <a href='javascript:void(0);' onclick='sendForm("{{ product }}")'>
-                        <div class="nutriscore text-center">{{ product.nutriscore }}</div>
+                    <a href='javascript:void(0);' onclick='sendForm("{{ product }}")' title="Rechercher ce produit">
+                        <div class="nutriscore nutricolor-{{product.nutriscore}} text-center text-uppercase">
+                            {{ product.nutriscore }}</div>
 
                         {% if product.imgURL != None %}
                         <img class="img-fluid rounded mx-auto d-block productImg" src="{{ product.imgURL }}">
@@ -115,7 +133,7 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
 
                         <div class="card-body">
                             <h4 class="card-title text-center"><a href="{% url 'produit' product %}" class="subName"
-                                    title="View Product">
+                                    title="Fiche du produit">
                                     {{ product }}
                                 </a></h4>
                             <div class="row">
@@ -134,12 +152,32 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
             {% endfor %}
         </div>
     </section>
-    {% endif %}
     <script>
-        function sendForm(pName) {
-            document.getElementById("PName").value = pName;
+        function sendForm(product_name) {
+            document.getElementById("product_name").value = product_name;
             document.getElementById("productRaw").value = true;
             document.getElementById("productSearch").submit();
         }
     </script>
+    {% else %}
+    <header class="sproducthead randimg{{random_img}} text-center text-white d-flex">
+        <div class="container my-auto">
+            <div style="padding-bottom:30vh;">
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mx-auto" style="padding-bottom:32vh;">
+                    <h1>
+                        <strong class="sproductname">Aucun produit n'as été trouvé ¯\_(ツ)_/¯</strong>
+                    </h1>
+                </div>
+                <div class="col-lg-10 mx-auto">
+                    <h1>
+                        <strong class="sproductname"></strong>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% endif %}
+
     {% endblock content %}

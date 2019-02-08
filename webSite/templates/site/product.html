@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-Pur Beurre - Recherche : {{ request.POST.PName }}
+{% if substitute != None %}
+Pur Beurre - Produit : {{ substitute }}
+{%else%}
+Pur Beurre - Produit : {{ product }}
+{% endif %}
 {% endblock title %}
 
 {% block body %}
@@ -14,8 +18,28 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
         Pur Beurre</a>
     {% endblock menuTop %}
     {% block content %}
-    <header class="sproducthead text-center text-white d-flex">
+    <header class="sproducthead randimg{{random_img}} text-center text-white d-flex">
         <div class="container my-auto">
+            {% if substitute != None %}
+            <div class="row">
+                <div class="col-lg-10 mx-auto sproductname">
+                    <h1>
+                        <strong class="">{{ substitute }}</strong>
+                    </h1>
+                </div>
+                <div class="sproductimg">
+                    <img src="{{ substitute.imgURL }}">
+                </div>
+            </div>
+
+            <div class="row" style="padding-top:20px;">
+                <div class="col">
+                    <a href="{% url 'favoris_register' product substitute %}" class="btn btn-info btn-block" value=""><span
+                            class='fas fa-floppy-o'></span>
+                        Sauvegarder ce produit comme substitut de {{ product }}</a>
+                </div>
+            </div>
+            {% else %}
             <div class="row">
                 <div class="col-lg-10 mx-auto sproductname">
                     <h1>
@@ -26,6 +50,7 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
                     <img src="{{ product.imgURL }}">
                 </div>
             </div>
+            {% endif %}
 
         </div>
     </header>
@@ -34,17 +59,28 @@ Pur Beurre - Recherche : {{ request.POST.PName }}
         <div class="container">
             <div class="row">
                 <div class="col-lg-5 mx-auto">
-                    <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{product.nutriscore}}.svg" alt="NutriScore nutrition grade {{product.nutriscore}}">
+                    {% if substitute != None %}
+                    <img class="img-fluid rounded" src="https://static.openfoodfacts.org/images/misc/nutriscore-{{substitute.nutriscore}}.svg"
+                        alt="NutriScore nutrition grade {{substitute.nutriscore}}">
+                    {%else%}
+                    <img class="img-fluid rounded" src="https://static.openfoodfacts.org/images/misc/nutriscore-{{product.nutriscore}}.svg"
+                        alt="NutriScore nutrition grade {{product.nutriscore}}">
+                    {%endif%}
                 </div>
                 <div class="col-lg-5 mx-auto">
-                    <img src="{{ nutriIMG }}" alt="Values for 100g">
+                    <img class="img-fluid rounded" src="{{ nutri_img }}" alt="Values for 100g">
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-lg-5 mx-auto">
-                    <a href="{{ product.productURL }}">
-                        <h3>Lien vers la page du produit sur OpenFoodFact</h3>
-                    </a>
+                    {% if substitute != None %}
+                    <a href="{{ substitute.productURL }}">
+                        {%else%}
+                        <a href="{{ product.productURL }}">
+                            {%endif%}
+                            <h3>Lien vers la page du produit sur OpenFoodFact</h3>
+                        </a>
                 </div>
             </div>
         </div>

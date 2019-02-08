@@ -41,7 +41,7 @@
         <div class="container">
             {% block menuTop %}
             <a class="navbar-brand js-scroll-trigger" href="#page-top"> <img src="{% static 'site/img/favicon.ico' %}"
-                    style="margin-bottom:4px;"> Pur Beurre</a>
+                    > Pur Beurre</a>
             {% endblock menuTop %}
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,11 +50,11 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto row">
                     <li class="nav-item">
-                        <form class="form-group" action="{% url 'recherche' %}" method="post" style="margin-top:-1px; margin-right: 5px;" id="productSearch">
+                        <form class="form-group row" action="{% url 'recherche' %}" method="post" style="margin-top:-1px; margin-right: 5px;" id="productSearch">
                             {% csrf_token %}
                             <div class="input-group">
-                                <div class="col-lg-2 col-2"></div>
-                                <input id="PName" type="text" name="PName" class="mx-auto col-lg-6 col-6 txtQuery" rows="1"
+                                <div class="col-lg-2"></div>
+                                <input id="PName" type="text" name="PName" class="mx-auto col-lg-6 col-8 txtQuery" rows="1"
                                     placeholder="Recherche...">
                                 <input type="submit" class="input-group-addon btn btn-primary col-lg-4 col-4 mx-auto"
                                     value="Rechercher" style="border-radius:0;">
@@ -64,20 +64,17 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item center">
-                        <a href="{% url 'acceuil' %}" class="fas fa-user matIcon col" title="Profil"></a>
+                        <a href="{% url 'user' %}" class="fas fa-user matIcon col" title="Profil"></a>
                     </li>
                     <li class="nav-item center">
-                        <a href="{% url 'acceuil' %}" class="fas fa-carrot matIcon col" title="Mes Substitus"></a>
+                        <a href="{% url 'favoris' %}" class="fas fa-carrot matIcon col" title="Mes Substitus"></a>
                     </li>
                     <li class="nav-item center" style="margin-bottom:2%;">
                         <a href="{% url 'logout' %}" class="fas fa-sign-out-alt matIcon col" title="Se déconnecter"></a>
                     </li>
                     {% else %}
                     <li class="nav-item center">
-                        <a href="{% url 'connexion' %}" class="fas fa-user matIcon col" title="Profil"></a>
-                    </li>
-                    <li class="nav-item center">
-                        <a href="{% url 'connexion' %}" class="fas fa-carrot matIcon col" title="Mes Substitus"></a>
+                        <a href="{% url 'connexion' %}" class="fas fa-sign-in-alt matIcon col" title="Se connecter"></a>
                     </li>
                     {% endif %}
                 </ul>

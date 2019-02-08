@@ -247,7 +247,7 @@ a.matIcon:hover {
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 990px) {
   .center {
     display: table;
     margin: 0 auto;
@@ -271,11 +271,10 @@ a.matIcon:hover {
   left: 0;
 }
 
-
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 56px);
-  background-image: url("../img/image.jpg");
+  background-image: url("../img/image1.jpg");
   background-position: center center;
   background-size: cover;
 }
@@ -284,18 +283,24 @@ header.sproducthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 100px);
   background-position: center center;
-  background-repeat: no-repeat;
-  background-color: rgb(222, 148, 64);
-  background-size: auto;
+  background-size: cover;
+}
+
+.randimg1 {
+  background-image: url("../img/image1.jpg");
+}
+
+.randimg2 {
+  background-image: url("../img/image2.jpg");
+}
+
+.randimg3 {
+  background-image: url("../img/image3.jpg");
 }
 
 .sproductname {
   padding-right: 2%;
   padding-left: 2%;
-  background-color: rgba(196, 85, 37, 0.5);
-  border-style: solid;
-  border: 0.1rem solid rgba(232, 167, 93, 1);
-  border-radius: 0.5rem;
 }
 
 .sproductimg {
@@ -313,9 +318,10 @@ header.sproducthead {
 
 .product {
   width: 100%;
-  border: 0.3rem solid rgba(0, 0, 0, 0.1);
+  border: 0.3rem solid rgba(52, 90, 97, 0.2);
   border-radius: 0.5rem;
   margin: 4%;
+  background-color: rgba(52, 90, 97, 0.1);
 }
 
 .productCard {
@@ -336,14 +342,71 @@ header.sproducthead {
 }
 
 .nutriscore {
-  height: 1.6rem;
-  width: 1.6rem;
+  height: 2.8rem;
+  width: 2.8rem;
+  font-size: 1.7rem;
+  font-family: "Open Sans", sans-serif;
   border: 2px rgb(78, 78, 78) solid;
   border-radius: 50%;
   background-color: rgb(255, 255, 255);
   position: absolute;
-  left: 97%;
-  top: -2%;
+  left: 96%;
+  top: -4%;
+  color: white;
+}
+
+.nutricolor-a {
+  background-color: #038141;
+}
+
+.nutricolor-b {
+  background-color: #85BB2F;
+}
+
+.nutricolor-c {
+  background-color: rgb(202, 162, 0);
+}
+
+.nutricolor-d {
+  background-color: #EE8100;
+}
+
+.nutricolor-e {
+  background-color: #E63E11;
+}
+
+.category a:link {
+  text-decoration: none;
+}
+
+.category-head:after {
+  font-family: 'FontAwesome';
+  content: "\f068";
+}
+
+.category-head.collapsed:after {
+  /* symbol for "collapsed" panels */
+
+  content: "\f067";
+}
+
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height .35s ease;
+  -o-transition: height .35s ease;
+  transition: height .35s ease;
+}
+
+.category {
+  border: 0px;
+  border-bottom: 2px;
+  border-radius: 1px;
+  border-style: solid;
+  color: #C45525;
+  border-color: #C45525;
+  padding-bottom: 5px;
 }
 
 @media (max-width: 800px) {
@@ -371,7 +434,76 @@ header.sproducthead {
 
 }
 
+.centered-form {
+  margin-top: 60px;
+}
 
+.centered-form .panel {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: rgba(0, 0, 0, 0.4) 20px 20px 20px;
+  padding: 30px;
+
+}
+
+.hidden {
+  display: none;
+}
+
+.loginCont {
+  padding-top: 10rem;
+  padding-bottom: 45vh;
+  background-position: center center;
+  background-size: cover;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  display: none;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
 
 .products,
 .texthead {
