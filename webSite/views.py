@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.contrib.admin.utils import unquote
 
 from .models import Product, Profile, Favorite
 from .forms import ConnexionForm, RegisterForm
@@ -74,6 +75,7 @@ def search(request):
     if name != "":
         try:
             is_raw = bool(request.POST.get('productRaw'))
+            name = unquote(name)
             if is_raw:
                 product = Product.objects.get(productName=name)
             else:
@@ -113,6 +115,7 @@ def product_info(request, product_name):
     """
 
     random_img = randint(1, 3)
+    product_name = unquote(product_name)
     product = Product.objects.get(productName=product_name)
     url = product.productURL
     code = url.split("/")[4]
@@ -133,7 +136,10 @@ def product_substitute_info(request, product_name, substitute_name):
     Returns:
         template : "site/product.html"
     """
+
     random_img = randint(1, 3)
+    product_name = unquote(product_name)
+    substitute_name = unquote(substitute_name)
     product = Product.objects.get(productName=product_name)
     substitute = Product.objects.get(productName=substitute_name)
     url = substitute.productURL
@@ -199,6 +205,8 @@ def register_fav(request, product_name, substitute_name):
     if request.user.is_authenticated:
         profile = request.user.profile
         favorites = profile.favorites.all()
+        product_name = unquote(product_name)
+        substitute_name = unquote(substitute_name)
         try:
             product = Product.objects.get(productName=product_name)
         except Product.DoesNotExist:
@@ -249,6 +257,8 @@ def remove_fav(request, product_name, substitute_name):
     random_img = randint(1, 3)
     if request.user.is_authenticated:
         profile = request.user.profile
+        product_name = unquote(product_name)
+        substitute_name = unquote(substitute_name)
         product = Product.objects.get(productName=product_name)
         substitute = Product.objects.get(productName=substitute_name)
         try:

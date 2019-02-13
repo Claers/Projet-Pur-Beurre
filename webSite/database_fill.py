@@ -76,8 +76,11 @@ class fill(Thread):
                                     productobj.productURL = (
                                         product["image_front_url"])
                             except Product.DoesNotExist:
+                                p_name = product['product_name']
+                                if product['product_name'].contains('/'):
+                                    p_name = p_name.replace('/', '-')
                                 productobj = Product.objects.create(
-                                    productName=product['product_name'],
+                                    productName=p_name,
                                     shops=product['stores'],
                                     brands=product['brands'],
                                     productURL=product['url'],

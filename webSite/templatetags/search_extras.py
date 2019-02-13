@@ -1,7 +1,5 @@
 """ Extra tags filter for the webSite app """
 from django import template
-from django.template.defaultfilters import stringfilter
-import urllib
 
 register = template.Library()
 
@@ -23,15 +21,4 @@ def dictLenght(value):
     return lenght
 
 
-@stringfilter
-def name_checker(value):
-    """Function filter to parse a product name to not break url
-
-    Arguments:
-        value {string} -- The product name
-    """
-    return urllib.parse.quote(value, safe='')
-
-
 register.filter('dictLenght', dictLenght)
-register.filter('name_checker', name_checker)
