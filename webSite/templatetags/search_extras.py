@@ -2,7 +2,7 @@
 from django import template
 
 import urllib.parse as parser
-
+from django.contrib.admin.utils import quote
 register = template.Library()
 
 
@@ -29,8 +29,7 @@ def name_checker(value):
     Arguments:
         value {string} -- The product name
     """
-    print(value)
-    return value.replace("/", "%2F")
+    return quote(value)
 
 
 register.filter('dictLenght', dictLenght)

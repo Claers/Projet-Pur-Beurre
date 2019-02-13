@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.contrib.admin.utils import unquote
 
 from .models import Product, Profile, Favorite
 from .forms import ConnexionForm, RegisterForm
@@ -74,7 +75,7 @@ def search(request):
     if name != "":
         try:
             is_raw = bool(request.POST.get('productRaw'))
-            name = name.replace("%2F", "/")
+            name = unquote(name)
             if is_raw:
                 product = Product.objects.get(productName=name)
             else:
