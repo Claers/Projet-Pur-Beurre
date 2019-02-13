@@ -23,16 +23,4 @@ def dictLenght(value):
     return lenght
 
 
-<<<<<<< HEAD
-=======
-def name_checker(value):
-    """Function filter to parse a product name to not break url
-
-    Arguments:
-        value {string} -- The product name
-    """
-    return quote(value)
-
-
->>>>>>> master
 register.filter('dictLenght', dictLenght)

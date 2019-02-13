@@ -31,7 +31,6 @@ def index(request):
         messages.success(request, "Vous avez été déconnecté.")
     if "success" in current_url and request.user.is_authenticated:
         messages.success(request, "Vous êtes connecté.")
-
     return render(request, 'site/index.html', locals())
 
 
@@ -75,7 +74,6 @@ def search(request):
     if name != "":
         try:
             is_raw = bool(request.POST.get('productRaw'))
-            name = unquote(name)
             if is_raw:
                 product = Product.objects.get(productName=name)
             else:
@@ -138,8 +136,6 @@ def product_substitute_info(request, product_name, substitute_name):
     """
 
     random_img = randint(1, 3)
-    product_name = unquote(product_name)
-    substitute_name = unquote(substitute_name)
     product = Product.objects.get(productName=product_name)
     substitute = Product.objects.get(productName=substitute_name)
     url = substitute.productURL
@@ -205,8 +201,6 @@ def register_fav(request, product_name, substitute_name):
     if request.user.is_authenticated:
         profile = request.user.profile
         favorites = profile.favorites.all()
-        product_name = unquote(product_name)
-        substitute_name = unquote(substitute_name)
         try:
             product = Product.objects.get(productName=product_name)
         except Product.DoesNotExist:
@@ -257,8 +251,6 @@ def remove_fav(request, product_name, substitute_name):
     random_img = randint(1, 3)
     if request.user.is_authenticated:
         profile = request.user.profile
-        product_name = unquote(product_name)
-        substitute_name = unquote(substitute_name)
         product = Product.objects.get(productName=product_name)
         substitute = Product.objects.get(productName=substitute_name)
         try:
