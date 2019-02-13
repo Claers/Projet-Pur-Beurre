@@ -60,7 +60,7 @@ Pur Beurre - Recherche : {{ request.POST.product_name }}
             {% for substitute in substitutes %}
             <div class="col-5 col-md-5 col-lg-3 product">
                 <div class="productCard">
-                    <a href="{% url 'produit_substitut' product substitute %}">
+                    <a href="{% url 'produit_substitut' product|name_checker substitute|name_checker %}">
                         <div class="nutriscore nutricolor-{{substitute.nutriscore}} text-center text-uppercase">
                             {{ substitute.nutriscore }}</div>
 
@@ -132,8 +132,8 @@ Pur Beurre - Recherche : {{ request.POST.product_name }}
                         {% endif %}
 
                         <div class="card-body">
-                            <h4 class="card-title text-center"><a href="{% url 'produit' product %}" class="subName"
-                                    title="Fiche du produit">
+                            <h4 class="card-title text-center"><a href="{% url 'produit' product|name_checker %}" class="subName"
+                                    title="{{ product }}">
                                     {{ product }}
                                 </a></h4>
                             <div class="row">

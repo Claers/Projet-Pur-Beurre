@@ -133,7 +133,6 @@ def product_substitute_info(request, product_name, substitute_name):
     Returns:
         template : "site/product.html"
     """
-
     random_img = randint(1, 3)
     product = Product.objects.get(productName=product_name)
     substitute = Product.objects.get(productName=substitute_name)
