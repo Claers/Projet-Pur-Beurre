@@ -74,6 +74,7 @@ def search(request):
     if name != "":
         try:
             is_raw = bool(request.POST.get('productRaw'))
+            name = name.replace("%2F", "/")
             if is_raw:
                 product = Product.objects.get(productName=name)
             else:
