@@ -314,7 +314,11 @@ header.sproducthead {
   border-radius: 0.5rem;
 }
 
+footer {
+  background-color: rgba(52, 90, 97, 0.2);
+  color: white;
 
+}
 
 .product {
   width: 100%;
@@ -630,9 +634,16 @@ header.masthead p {
   font-size: 15px;
   width: 100%;
   text-transform: uppercase;
+  border-radius: 0;
   border: none;
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
+
+.btn-product {
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
 
 .btn-xl {
   padding: 1rem 2rem;

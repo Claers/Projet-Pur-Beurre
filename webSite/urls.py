@@ -1,3 +1,4 @@
+""" Urls for the webSite app """
 from django.urls import path
 from . import views
 
@@ -18,4 +19,5 @@ urlpatterns = [
     path('user', views.user, name="user"),
     path('favoris', views.favorites, name="favoris"),
     path('admin/delete', views.deldata, name="deleteDB"),
+    path('legal', views.legal_mentions, name="legal")
 ]

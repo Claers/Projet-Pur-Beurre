@@ -1,4 +1,6 @@
-""" webSite app views document """
+"""
+webSite app views document
+"""
 
 from random import randint
 import requests
@@ -10,7 +12,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 
 from .models import Product, Profile, Favorite
-from .forms import ConnexionForm
+from .forms import ConnexionForm, RegisterForm
 from .database_fill import fill, delete_db
 
 
@@ -75,11 +77,11 @@ def search(request):
             if is_raw:
                 product = Product.objects.get(productName=name)
             else:
-                product = Product.objects.get(productName__contains=name)
+                product = Product.objects.get(productName__icontains=name)
             url = product.productURL
             img = product.imgURL
             substitutes = Product.objects.filter(
-                productName__contains=name).exclude(
+                productName__icontains=name).exclude(
                     productName=product)
             categories = product.category_set.all()
             products_by_category = list_product_by_category(
@@ -87,7 +89,7 @@ def search(request):
             return render(request, 'site/search.html', locals())
         except Product.MultipleObjectsReturned:
             products = Product.objects.filter(
-                productName__contains=name).order_by('nutriscore').distinct()
+                productName__icontains=name).order_by('nutriscore').distinct()
             return render(request, 'site/search.html', locals())
         except Product.DoesNotExist:
             return render(request, 'site/search.html', locals())
@@ -290,21 +292,31 @@ def connexion(request):
                     messages.error(request,
                                    "Utilisateur inconnu ou" +
                                    " mauvais de mot de passe.")
+            else:
+                messages.error(request,
+                               "Utilisateur inconnu ou" +
+                               " mauvais de mot de passe.")
     else:
         try:
             if request.method == "POST":
-                username = request.POST.get("username", '')
-                password = request.POST.get("password", '')
-                email = request.POST.get("email", '')
-                # Nous vérifions si les données sont correctes
-                user = User.objects.create_user(username=username,
-                                                password=password, email=email)
-                Profile.objects.create(user=user, email=email, favorites=None)
-                user = authenticate(username=username,
-                                    password=password)
-                if user:  # Si l'objet renvoyé n'est pas None
-                    login(request, user)  # nous connectons l'utilisateur
-                    return redirect('acceuil_login')
+                form = RegisterForm(request.POST)
+                if form.is_valid():
+                    username = request.POST.get("username", '')
+                    password = request.POST.get("password", '')
+                    email = request.POST.get("email", '')
+                    # Nous vérifions si les données sont correctes
+                    user = User.objects.create_user(username=username,
+                                                    password=password,
+                                                    email=email)
+                    Profile.objects.create(
+                        user=user, email=email, favorites=None)
+                    user = authenticate(username=username,
+                                        password=password)
+                    if user:  # Si l'objet renvoyé n'est pas None
+                        login(request, user)  # nous connectons l'utilisateur
+                        return redirect('acceuil_login')
+                else:
+                    messages.error(request, "Merci de remplir tout les champs")
         except IntegrityError:
             messages.error(request,
                            "Utilisateur déja existant")
@@ -316,7 +328,7 @@ def legal_mentions(request):
     """
     Display the legal mentions page
     """
-    return render(request, 'site/index.html', locals())
+    return render(request, 'site/legal.html', locals())
 
 
 def logout_user(request):
@@ -338,7 +350,8 @@ def filldata(request):
     Returns:
         template : "admin/base_site.html"
     """
-    fill()
+    fill_thread = fill()
+    fill_thread.start()
     return render(request, 'admin/base_site.html', locals())
 
 

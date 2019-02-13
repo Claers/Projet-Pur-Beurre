@@ -1,15 +1,24 @@
+""" Extra tags filter for the webSite app """
 from django import template
 
 register = template.Library()
 
 
 def dictLenght(value):
-    if(type(value) is dict):
-        nb = 0
+    """Function filter to calculate the lenght of all list inside of a dict
+
+    Arguments:
+        value {dict} -- The dict used
+
+    Returns:
+        lenght {int} -- The lenght of all the list of the dict
+    """
+    if isinstance(value, dict):
+        lenght = 0
         for keys in value:
             for val in value[keys]:
-                nb += 1
-    return nb
+                lenght += 1
+    return lenght
 
 
 register.filter('dictLenght', dictLenght)

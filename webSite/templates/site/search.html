@@ -75,7 +75,7 @@ Pur Beurre - Recherche : {{ request.POST.product_name }}
                         </div>
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'favoris_register' product substitute %}" class="btn btn-info btn-block"><span
+                                <a href="{% url 'favoris_register' product substitute %}" class="btn btn-product btn-info btn-block"><span
                                         class="fas fa-floppy-o"></span>
                                     Sauvegarder</a>
                             </div>
@@ -138,7 +138,7 @@ Pur Beurre - Recherche : {{ request.POST.product_name }}
                                 </a></h4>
                             <div class="row">
                                 <div class="col">
-                                    <p onclick="sendForm('{{ product }}')" class="btn btn-info btn-block"><span></span>
+                                    <p onclick="sendForm('{{ product }}')" class="btn btn-product btn-info btn-block"><span></span>
                                         Rechercher
                                         ce produit</p>
                                 </div>
@@ -162,7 +162,7 @@ Pur Beurre - Recherche : {{ request.POST.product_name }}
     {% else %}
     <header class="sproducthead randimg{{random_img}} text-center text-white d-flex">
         <div class="container my-auto">
-            <div style="padding-bottom:30vh;">
+            <div style="padding-bottom:28vh;">
             </div>
             <div class="row">
                 <div class="col-lg-10 mx-auto" style="padding-bottom:32vh;">

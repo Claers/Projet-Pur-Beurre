@@ -40,8 +40,8 @@
         {% block nav %}
         <div class="container">
             {% block menuTop %}
-            <a class="navbar-brand js-scroll-trigger" href="#page-top"> <img src="{% static 'site/img/favicon.ico' %}"
-                    > Pur Beurre</a>
+            <a class="navbar-brand js-scroll-trigger" href="#page-top"> <img src="{% static 'site/img/favicon.ico' %}">
+                Pur Beurre</a>
             {% endblock menuTop %}
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,15 +50,16 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto row">
                     <li class="nav-item">
-                        <form class="form-group row" action="{% url 'recherche' %}" method="post" style="margin-top:-1px; margin-right: 5px;" id="productSearch">
+                        <form class="form-group row" action="{% url 'recherche' %}" method="post" style="margin-top:-1px; margin-right: 5px;"
+                            id="productSearch">
                             {% csrf_token %}
                             <div class="input-group">
                                 <div class="col-lg-2"></div>
-                                <input id="PName" type="text" name="PName" class="mx-auto col-lg-6 col-8 txtQuery" rows="1"
-                                    placeholder="Recherche...">
+                                <input id="product_name" type="text" name="product_name" class="mx-auto col-lg-6 col-8 txtQuery"
+                                    rows="1" placeholder="Recherche...">
                                 <input type="submit" class="input-group-addon btn btn-primary col-lg-4 col-4 mx-auto"
                                     value="Rechercher" style="border-radius:0;">
-                                    <input type="hidden" id="productRaw" name="productRaw">
+                                <input type="hidden" id="productRaw" name="productRaw">
                             </div>
                         </form>
                     </li>
@@ -101,7 +102,15 @@
 
     <!-- Custom scripts for this template -->
     <script src="{% static 'site/js/creative.min.js' %}"></script>
-    <footer>&copy; Pur Beurre</footer>
+    {% block footer %}
+    
+    <footer class="page-footer py-2 row mx-auto text-center">
+        <div class="col-3 mx-auto"><a href="{% url 'legal' %}">Mentions légales</a>
+        </div>
+        <div class="col-3 mx-auto"><a href="{% url 'acceuil' %}#contact">Contact</a>
+        </div>
+{% endblock footer %}
+    </footer>
 </body>
 
 </html>

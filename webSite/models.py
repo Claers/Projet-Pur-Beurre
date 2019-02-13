@@ -20,7 +20,7 @@ class Product(models.Model):
         imgURL {URLField} -- The url of the product image
 
     Returns:
-       self.productName {string} -- The name of the product
+        {string} -- The name of the product
     """
     productName = models.CharField(max_length=100, unique=True)
     shops = models.TextField(null=False)
@@ -39,6 +39,16 @@ class Product(models.Model):
 
 
 class Category(models.Model):
+    """Store a category
+    The category is unique
+
+    Fields:
+        categoryName {CharField} -- The name of the category (max_lenght=150)
+        products {Product ManyToManyField} -- The products in the category
+
+    Returns:
+        {string} -- The name of the category
+    """
     categoryName = models.CharField(max_length=150, unique=True)
     products = models.ManyToManyField(Product)
 
@@ -51,6 +61,16 @@ class Category(models.Model):
 
 
 class Favorite(models.Model):
+    """Store a favorite
+    The favorite is unique
+
+    Fields:
+        substitute {Product} -- The substitute
+        product {Product} -- The product
+
+    Returns:
+       {string} -- The name of the substitute and the product
+    """
     substitute = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='%(class)s_substitute')
     product = models.ForeignKey(
@@ -67,9 +87,19 @@ class Favorite(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    """Store a profile
+    The profile is unique
+
+    Fields:
+        user {User} -- The user owner of the Profile
+        favorites {Favorite ManyToManyField} -- The favorites of the profile
+
+    Returns:
+        {string} -- The username of the profile owner
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, )
     favorites = models.ManyToManyField(
-        Favorite)
+        Favorite, blank=True)
 
     def __str__(self):
         return "Profil de {0}".format(self.user.username)
