@@ -115,6 +115,7 @@ def product_info(request, product_name):
     """
 
     random_img = randint(1, 3)
+    product_name = unquote(product_name)
     product = Product.objects.get(productName=product_name)
     url = product.productURL
     code = url.split("/")[4]
@@ -136,6 +137,8 @@ def product_substitute_info(request, product_name, substitute_name):
         template : "site/product.html"
     """
     random_img = randint(1, 3)
+    product_name = unquote(product_name)
+    substitute_name = unquote(substitute_name)
     product = Product.objects.get(productName=product_name)
     substitute = Product.objects.get(productName=substitute_name)
     url = substitute.productURL
