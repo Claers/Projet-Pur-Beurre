@@ -29,7 +29,8 @@ def name_checker(value):
     Arguments:
         value {string} -- The product name
     """
-    return parser.quote(value, safe='')
+    print(value)
+    return value.replace("/", "%2F")
 
 
 register.filter('dictLenght', dictLenght)
