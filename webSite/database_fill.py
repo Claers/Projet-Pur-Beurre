@@ -77,7 +77,7 @@ class fill(Thread):
                                         product["image_front_url"])
                             except Product.DoesNotExist:
                                 p_name = product['product_name']
-                                if product['product_name'].contains('/'):
+                                if '/' in product['product_name']:
                                     p_name = p_name.replace('/', '-')
                                 productobj = Product.objects.create(
                                     productName=p_name,
