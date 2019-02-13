@@ -206,7 +206,7 @@ def register_fav(request, product_name, substitute_name):
         favorites = profile.favorites.all()
         product_name = unquote(product_name)
         substitute_name = unquote(substitute_name)
-       try:
+        try:
             product = Product.objects.get(productName=product_name)
         except Product.DoesNotExist:
             messages.error(
