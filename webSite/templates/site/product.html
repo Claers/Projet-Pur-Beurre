@@ -34,7 +34,7 @@ Pur Beurre - Produit : {{ product }}
 
             <div class="row" style="padding-top:20px;">
                 <div class="col">
-                    <a href="{% url 'favoris_register' product substitute %}" class="btn btn-info btn-block" value=""><span
+                    <a href="{% url 'favoris_register' product|name_checker substitute|name_checker %}" class="btn btn-info btn-block" value=""><span
                             class='fas fa-floppy-o'></span>
                         Sauvegarder ce produit comme substitut de {{ product }}</a>
                 </div>

@@ -204,7 +204,9 @@ def register_fav(request, product_name, substitute_name):
     if request.user.is_authenticated:
         profile = request.user.profile
         favorites = profile.favorites.all()
-        try:
+        product_name = unquote(product_name)
+        substitute_name = unquote(substitute_name)
+       try:
             product = Product.objects.get(productName=product_name)
         except Product.DoesNotExist:
             messages.error(
@@ -254,6 +256,8 @@ def remove_fav(request, product_name, substitute_name):
     random_img = randint(1, 3)
     if request.user.is_authenticated:
         profile = request.user.profile
+        product_name = unquote(product_name)
+        substitute_name = unquote(substitute_name)
         product = Product.objects.get(productName=product_name)
         substitute = Product.objects.get(productName=substitute_name)
         try:
