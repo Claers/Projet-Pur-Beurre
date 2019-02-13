@@ -353,7 +353,7 @@ def filldata(request):
     """
     fill_thread = fill()
     fill_thread.start()
-    return render(request, 'admin/base_site.html', locals())
+    return redirect('/admin/')
 
 
 def deldata(request):
@@ -366,4 +366,4 @@ def deldata(request):
         template : "admin/base_site.html"
     """
     delete_db()
-    return render(request, 'admin/base_site.html', locals())
+    return redirect('/admin/')
