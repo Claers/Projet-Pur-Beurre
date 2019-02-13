@@ -68,14 +68,14 @@ Pur Beurre - Recherche : {{ request.POST.product_name }}
                         <img class="img-fluid rounded mx-auto d-block productImg" src="{{ substitute.imgURL }}">
                         {% endif %}
                         <div class="card-body">
-                            <h4 class="card-title text-center"><a class="subName" href="{% url 'produit_substitut' product substitute %}"
+                            <h4 class="card-title text-center"><a class="subName" href="{% url 'produit_substitut' product|name_checker substitute|name_checker %}"
                                     title="{{ substitute }}">
                                     {{ substitute }}
                                 </a></h4>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <a href="{% url 'favoris_register' product substitute %}" class="btn btn-product btn-info btn-block"><span
+                                <a href="{% url 'favoris_register' product|name_checker substitute|name_checker %}" class="btn btn-product btn-info btn-block"><span
                                         class="fas fa-floppy-o"></span>
                                     Sauvegarder</a>
                             </div>
