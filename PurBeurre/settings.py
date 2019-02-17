@@ -90,10 +90,11 @@ WSGI_APPLICATION = 'PurBeurre.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 # Production Database
-# DATABASES = {'default': dj_database_url.config()}
+DATABASES = {'default': dj_database_url.config()}
 
 # Development database
 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -104,7 +105,7 @@ DATABASES = {
         'PORT': '',
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
