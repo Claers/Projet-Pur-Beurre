@@ -4,6 +4,7 @@ PurBeurre is a website application running on Django. The objective of the app i
 
 ## Prerequisites
 
+- Python 3.7.2
 - Django 2.1+ (2.1.7 used for developpement)
 - PostGreSQL database with access to parameter in settings.py in the PurBeurre folder
 - All the other required modules are in the requirements.txt file to install before launching the app.
