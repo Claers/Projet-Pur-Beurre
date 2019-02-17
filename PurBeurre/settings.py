@@ -1,4 +1,3 @@
-from django.contrib.messages import constants as messages
 """
 Django settings for PurBeurre project.
 
@@ -14,6 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import dj_database_url
 
+from django.contrib.messages import constants as messages
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,10 +23,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ioe*9306(rfyc1t22f-%-pw*14ql3!qtomm3y#rxl39d%fx$=+'
+SECRET_FILE = os.path.join(BASE_DIR, 'secret.txt')
+try:
+    SECRET_KEY = open(SECRET_FILE).read().strip()
+except IOError:
+    try:
+        import random
+        SECRET_KEY = ''.join([random.SystemRandom().choice(
+            'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
+            for i in range(50)])
+        secret = open(SECRET_FILE, 'w')
+        secret.write(SECRET_KEY)
+        secret.close()
+    except IOError:
+        Exception('Please create a %s file with random characters \
+        to generate your secret key!' % SECRET_FILE)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Application definition
 
@@ -74,9 +89,11 @@ WSGI_APPLICATION = 'PurBeurre.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {'default': dj_database_url.config()}
+# Production Database
+# DATABASES = {'default': dj_database_url.config()}
 
-'''
+# Development database
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -87,7 +104,7 @@ DATABASES = {
         'PORT': '',
     }
 }
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -135,7 +152,7 @@ STATICFILES_DIRS = (
 )
 '''
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', 'www.pur-beurre-oc-flo.herokuapp.com']
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',

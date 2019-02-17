@@ -5,10 +5,11 @@ Django website app is required
 Django models used : Product, Category, Favorite
 """
 
-import requests
-from .models import Product, Category, Favorite
 from threading import Thread
-from django.shortcuts import redirect
+import requests
+
+from .models import Product, Category, Favorite
+
 
 # Initialisation
 
@@ -86,7 +87,7 @@ class fill(Thread):
                                     productURL=product['url'],
                                     nutriscore=product['nutrition_grades'],
                                     imgURL=product['image_front_url'])
-                                for category in product['categories'].split(","):
+                                for category in product['categories'].split(','):
                                     # SQL request to register a Categorie
                                     try:
                                         cat = Category.objects.get(
