@@ -153,7 +153,7 @@ STATICFILES_DIRS = (
 )
 '''
 
-ALLOWED_HOSTS = ['localhost', 'www.pur-beurre-oc-flo.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
