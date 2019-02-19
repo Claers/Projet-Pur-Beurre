@@ -53,55 +53,52 @@ def product_correct(product):
 
 class fill(Thread):
     """Function used to fill the database
-    The function is made of a loop that will load 150 pages of OOF API
 
     Django webSite models used : Product, Category
     """
 
-    def __init__(self):
+    def __init__(self, page):
         Thread.__init__(self)
+        self.page = page
 
     def run(self):
-        i = 1
         products = []
         try:
-            while i <= 200:
-                products = json_products_list(i)
-                for product in products['products']:
-                    try:
-                        if product_correct(product):
-                            try:
-                                productobj = Product.objects.get(
-                                    productName=product['product_name'])
-                                if productobj.productURL is None:
-                                    productobj.productURL = (
-                                        product["image_front_url"])
-                            except Product.DoesNotExist:
-                                p_name = product['product_name']
-                                if '/' in product['product_name']:
-                                    p_name = p_name.replace('/', '-')
-                                productobj = Product.objects.create(
-                                    productName=p_name,
-                                    shops=product['stores'],
-                                    brands=product['brands'],
-                                    productURL=product['url'],
-                                    nutriscore=product['nutrition_grades'],
-                                    imgURL=product['image_front_url'])
-                                for category in product['categories'].split(','):
-                                    # SQL request to register a Categorie
-                                    try:
-                                        cat = Category.objects.get(
-                                            categoryName=category).products.add(
-                                                productobj)
-                                    except Category.DoesNotExist:
-                                        cat = Category.objects.create(
-                                            categoryName=category)
-                                        cat.products.add(
+            products = json_products_list(self.page)
+            for product in products['products']:
+                try:
+                    if product_correct(product):
+                        try:
+                            productobj = Product.objects.get(
+                                productName=product['product_name'])
+                            if productobj.productURL is None:
+                                productobj.productURL = (
+                                    product["image_front_url"])
+                        except Product.DoesNotExist:
+                            p_name = product['product_name']
+                            if '/' in product['product_name']:
+                                p_name = p_name.replace('/', '-')
+                            productobj = Product.objects.create(
+                                productName=p_name,
+                                shops=product['stores'],
+                                brands=product['brands'],
+                                productURL=product['url'],
+                                nutriscore=product['nutrition_grades'],
+                                imgURL=product['image_front_url'])
+                            for category in product['categories'].split(','):
+                                # SQL request to register a Categorie
+                                try:
+                                    cat = Category.objects.get(
+                                        categoryName=category).products.add(
                                             productobj)
+                                except Category.DoesNotExist:
+                                    cat = Category.objects.create(
+                                        categoryName=category)
+                                    cat.products.add(
+                                        productobj)
 
-                    except KeyError:
-                        continue
-                i += 1
+                except KeyError:
+                    continue
 
         finally:
             pass

@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.admin.utils import unquote
+from django.http import JsonResponse
 
 from .models import Product, Profile, Favorite
 from .forms import ConnexionForm, RegisterForm
@@ -342,8 +343,17 @@ def logout_user(request):
     return redirect('acceuil_login')
 
 
-def filldata(request):
-    """View used to launch the database fill function
+def fill_view(request):
+    """View used to show the progress of database filling
+
+    It can be accessed in template with that view
+    But it will only be used on admin templates
+    """
+    return render(request, 'admin/fill.html', locals())
+
+
+def fill_data(request):
+    """View used with AJAX to keep progress of database fill
 
     It can be accessed in template with that view
     But it will only be used on admin templates
@@ -351,12 +361,24 @@ def filldata(request):
     Returns:
         template : "admin/base_site.html"
     """
-    fill_thread = fill()
+    page = request.GET.get('page', None)
+    fill_thread = fill(page)
     fill_thread.start()
-    return redirect('/admin/')
+    print("enter")
+    fill_thread.join()
+    print("exit")
+    data = {
+        'is_taken': True
+    }
+    return JsonResponse(data)
 
 
-def deldata(request):
+def fill_success(request):
+    messages.success(request, "Base de donnée remplie avec succès !")
+    return render(request, 'admin/fill.html', locals())
+
+
+def del_data(request):
     """View used to launch the database delete function
 
     It can be accessed in template with that view
