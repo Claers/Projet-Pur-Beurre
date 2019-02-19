@@ -338,6 +338,10 @@ footer {
   height: 2rem;
 }
 
+.favName {
+  height: 100%;
+}
+
 .productImg {
   max-height: 250px;
   min-height: 250px;

@@ -76,7 +76,8 @@ def search(request):
         try:
             is_raw = bool(request.POST.get('productRaw'))
             if is_raw:
-                product = Product.objects.get(productName=name)
+                product = Product.objects.get(id=name)
+                name = product.productName
             else:
                 product = Product.objects.get(productName__icontains=name)
             url = product.productURL
