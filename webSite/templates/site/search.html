@@ -128,7 +128,7 @@
             {% for product in products %}
             <div class="col-5 col-md-4 col-lg-3 product">
                 <div class="productCard">
-                    <a href='javascript:void(0);' onclick='sendForm("{{ product }}")' title="Rechercher ce produit">
+                    <a href='javascript:void(0);' onclick='sendForm("{{ product.id }}")' title="Rechercher ce produit">
                         <div class="nutriscore nutricolor-{{product.nutriscore}} text-center text-uppercase">
                             {{ product.nutriscore }}</div>
 

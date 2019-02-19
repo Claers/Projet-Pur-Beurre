@@ -390,3 +390,9 @@ def del_data(request):
     """
     delete_db()
     return redirect('/admin/')
+
+
+def error_404(request):
+    messages.error(request,
+                   "La page que vous avez voulu atteindre n'existe pas !")
+    return render(request, 'accueil', locals())
