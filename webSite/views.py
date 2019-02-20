@@ -375,6 +375,8 @@ def fill_data(request):
 
 
 def fill_success(request):
+    """View used to return the success of database fill
+    """
     messages.success(request, "Base de donnée remplie avec succès !")
     return render(request, 'admin/fill.html', locals())
 
@@ -393,6 +395,10 @@ def del_data(request):
 
 
 def error_404(request, exception):
+    """
+    View used to handle the 404 error
+    """
+
     messages.error(request,
                    "La page que vous avez voulu atteindre n'existe pas !")
     return render(request, 'site/index.html')

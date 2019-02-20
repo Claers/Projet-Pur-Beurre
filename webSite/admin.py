@@ -1,3 +1,6 @@
+"""Used to register models into admin view
+"""
+
 from django.contrib import admin
 from .models import Product, Category, Favorite, Profile
 # Register your models here.
