@@ -27,10 +27,13 @@ Pur Beurre - Produit : {{ product }}
                     <h1>
                         <strong class="subName favName" title="{{ substitute }}">{{ substitute }}</strong>
                     </h1>
-                    <div class="sproductimg img-fluid">
-                        <img src="{{ substitute.imgURL }}">
-                        <div class="nutriscore nutricolor-{{substitute.nutriscore}} text-center text-uppercase">
-                            {{ substitute.nutriscore }}</div>
+                    <div class="sproductimg ">
+                        <img class="img-fluid" src="{{ substitute.imgURL }}">
+                        <div class="col-lg-10 mx-auto text-center">
+                            <h3>
+                                Nutriscore : <span class=" text-uppercase"> {{ product.nutriscore }} </span>
+                            </h3>
+                        </div>
                     </div>
                 </div>
                 <p class="col-12 col-lg-2 mx-auto" style="font-size:30px; margin-top:20%;">remplace</p>
@@ -38,10 +41,13 @@ Pur Beurre - Produit : {{ product }}
                     <h1>
                         <strong class="subName favName" title="{{ product }}">{{ product }}</strong>
                     </h1>
-                    <div class="sproductimg img-fluid">
-                        <img src="{{ product.imgURL }}">
-                        <div class="nutriscore nutricolor-{{product.nutriscore}} text-center text-uppercase">
-                            {{ product.nutriscore }}</div>
+                    <div class="sproductimg">
+                        <img class=" img-fluid" src="{{ product.imgURL }}">
+                        <div class="col-lg-10 mx-auto text-center">
+                            <h3>
+                                Nutriscore : <span class=" text-uppercase"> {{ product.nutriscore }} </span>
+                            </h3>
+                        </div>
                     </div>
                 </div>
 

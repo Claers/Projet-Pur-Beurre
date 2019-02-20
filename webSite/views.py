@@ -176,7 +176,6 @@ def favorites(request):
     Returns:
         template : "site/favoris.html"
     """
-
     random_img = randint(1, 3)
     if request.user.is_authenticated:
         profile = request.user.profile
@@ -365,9 +364,7 @@ def fill_data(request):
     page = request.GET.get('page', None)
     fill_thread = fill(page)
     fill_thread.start()
-    print("enter")
     fill_thread.join()
-    print("exit")
     data = {
         'is_taken': True
     }

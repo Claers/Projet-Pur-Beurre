@@ -245,16 +245,6 @@ a.matIcon:hover {
   }
 }
 
-@media (max-width: 990px) {
-  .center {
-    display: table;
-    margin: 0 auto;
-  }
-
-  .btn {
-    font-size: 13px;
-  }
-}
 
 
 #message {
@@ -631,6 +621,7 @@ header.masthead p {
 
 }
 
+
 .btn {
   font-weight: 700;
   font-size: 15px;
@@ -640,6 +631,26 @@ header.masthead p {
   border: none;
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
+
+
+@media (max-width: 990px) {
+  .center {
+    display: table;
+    margin: 0 auto;
+  }
+
+  .btn {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 320px) {
+  .btn {
+    font-size: 11px;
+  }
+}
+
+
 
 .btn-product {
   border-radius: 2px;
