@@ -399,3 +399,13 @@ def error_404(request, exception):
     messages.error(request,
                    "La page que vous avez voulu atteindre n'existe pas !")
     return render(request, 'site/index.html')
+
+
+def error_500(request, exception):
+    """
+    View used to handle the 500 error
+    """
+
+    messages.error(request,
+                   "La page que vous avez voulu atteindre n'existe pas !")
+    return render(request, 'site/index.html')
