@@ -311,7 +311,7 @@ def connexion(request):
                                                     password=password,
                                                     email=email)
                     Profile.objects.create(
-                        user=user, email=email, favorites=None)
+                        user=user)
                     user = authenticate(username=username,
                                         password=password)
                     if user:  # Si l'objet renvoyé n'est pas None
