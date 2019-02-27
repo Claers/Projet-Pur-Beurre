@@ -17,7 +17,7 @@ from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+ON_HEROKU = os.environ.get('ON_HEROKU')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -40,7 +40,7 @@ except IOError:
         to generate your secret key!' % SECRET_FILE)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Application definition
 
@@ -89,23 +89,22 @@ WSGI_APPLICATION = 'PurBeurre.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# Production Database
-DATABASES = {'default': dj_database_url.config()}
-
-# Development database
-
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'purbeurre',
-        'USER': 'django',
-        'PASSWORD': 'django',
-        'HOST': 'localhost',
-        'PORT': '',
+if ON_HEROKU:
+    # Production Database
+    DATABASES = {'default': dj_database_url.config()}
+else:
+    # Development database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'purbeurre',
+            'USER': 'django',
+            'PASSWORD': 'django',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
     }
-}
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -143,15 +142,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'   # Qui devrait déjà être la configuration par défaut
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-'''
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "staticfiles"),
-)
-'''
+STATIC_URL = '/static/'   # Qui devrait déjà être la configuration par défaut
+if ON_HEROKU:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+else:
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "staticfiles"),
+    )
+
 
 ALLOWED_HOSTS = ['*']
 
