@@ -18,6 +18,7 @@ from django.contrib.messages import constants as messages
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ON_HEROKU = os.environ.get('ON_HEROKU')
+ON_PROD = 'PRODUCTION' in os.environ
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -40,7 +41,7 @@ except IOError:
         to generate your secret key!' % SECRET_FILE)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if ON_HEROKU:
+if ON_PROD or ON_HEROKU:
     DEBUG = False
 else:
     DEBUG = True
