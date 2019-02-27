@@ -40,7 +40,11 @@ except IOError:
         to generate your secret key!' % SECRET_FILE)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if ON_HEROKU:
+    DEBUG = False
+else:
+    DEBUG = True
+
 
 # Application definition
 
