@@ -9,6 +9,9 @@ install:
   - pip install -r requirements.txt
 before_script:
   - psql -c "CREATE DATABASE purbeurre;" -U postgres
+  - psql -c "CREATE USER django"
+  - psql -c "ALTER USER django WITH PASSWORD 'django'"
+  - psql -c "GRANT ALL PRIVILEGES ON DATABASE purbeurre TO django"
 script:
   - python manage.py migrate
   - python manage.py test
