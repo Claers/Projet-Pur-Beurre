@@ -150,11 +150,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'   # Qui devrait déjà être la configuration par défaut
 if ON_PROD or ON_HEROKU:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else:
     STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, "staticfiles"),
+        os.path.join(BASE_DIR, "static"),
     )
 
 
