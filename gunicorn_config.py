@@ -1,4 +1,4 @@
-bind = "127.0.0.1:8887"
+bind = "flokami.ovh:8001"
 log_file = "logs/gunicorn_logs.txt"
 
 # Environment variables
