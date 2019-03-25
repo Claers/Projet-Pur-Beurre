@@ -69,8 +69,11 @@ class fill(Thread):
                 try:
                     if product_correct(product):
                         try:
+                            p_name = product['product_name']
+                            if '/' in product['product_name']:
+                                p_name = p_name.replace('/', '-')
                             productobj = Product.objects.get(
-                                productName=product['product_name'])
+                                productName=p_name)
                             if productobj.productURL is None:
                                 productobj.productURL = (
                                     product["image_front_url"])
@@ -113,3 +116,18 @@ def delete_db():
     Category.objects.all().delete()
     Favorite.objects.all().delete()
     Product.objects.all().delete()
+
+
+class fill_cron(Thread):
+    """Function used to fill the database
+
+    Django webSite models used : Product, Category
+    """
+
+    def __init__(self):
+        Thread.__init__(self)
+
+    def run(self):
+        for i in range(50):
+            fill_thread = fill(i)
+            fill_thread.start()
